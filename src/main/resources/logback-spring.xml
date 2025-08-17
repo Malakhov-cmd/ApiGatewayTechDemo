@@ -1,0 +1,45 @@
+<configuration>
+    <!-- Добавляем timestamp для имени файла -->
+    <timestamp key="today" datePattern="yyyy-MM-dd"/>
+
+    <springProperty name="LOG_DIR" source="app.log.dir"/>
+
+    <!-- Основной аппендер с ротацией по дате -->
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/app-${today}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Архивация каждый день -->
+            <fileNamePattern>${LOG_DIR}/app-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- Храним только 5 дней -->
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Отдельный файл для ошибок -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/error-${today}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/error-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEBUG/INFO только для своего пакета -->
+    <logger name="ru.tech.demo" level="DEBUG"/>
+
+    <!-- Логи уровня ERROR пишем и в основной, и в отдельный файл -->
+    <logger name="ROOT_ERROR" level="ERROR" additivity="false">
+        <appender-ref ref="ROLLING"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="ROLLING"/>
+    </root>
+</configuration>
