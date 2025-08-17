@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "ru.tech.demo"
@@ -16,4 +17,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = "src/main/java/ru/tech/demo/Main.java"
 }
