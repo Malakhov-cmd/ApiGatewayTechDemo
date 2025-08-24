@@ -1,0 +1,66 @@
+spring:
+  config:
+    import: "classpath:secrets.properties"
+  application:
+    name: api-gateway
+  datasource:
+    url: jdbc:postgresql://${db.main.pg.host}:${db.main.pg.port}/${db.main.pg.schema}
+    username: ${db.main.pg.username}
+    password: ${db.main.pg.password}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  data:
+    redis:
+      host: ${db.redis.host}
+      port: ${db.redis.port}
+      password: ${db.redis.password}
+  session:
+    redis:
+      namespace: ${redis.session.namespace}
+      flush-mode: on_save
+      repository-type: default
+  flyway:
+    enabled: false
+    locations: classpath:db/migration
+
+server:
+  port: ${ssl.port}
+  ssl:
+    enabled: true
+    key-store: ${ssl.key-store}
+    key-store-password: ${ssl.key-store-password}
+    key-password: ${ssl.key-password}
+    key-store-type: PKCS12
+    key-alias: ${ssl.key-alias}
+    enabled-protocols: TLSv1.2,TLSv1.3
+  undertow:
+    buffer-size: 1024
+    direct-buffers: true
+    threads:
+      io: 8
+      worker: 64
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    session:
+      timeout: ${session.timeout}
+      cookie:
+        name: SESSION
+        http-only: true
+        secure: true
+        same-site: Lax
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+# CUSTOM
+app:
+  log:
+    dir: ${log.main.dir}

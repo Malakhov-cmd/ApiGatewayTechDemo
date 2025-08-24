@@ -39,3 +39,4 @@ bin/
 .DS_Store
 
 logs/
+/src/main/resources/keystore.p12
