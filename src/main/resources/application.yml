@@ -1,6 +1,8 @@
 spring:
   config:
-    import: "classpath:secrets.properties"
+    import:
+      - "classpath:secrets.properties"
+      - "classpath:grafana/metrics-props.yml"
   application:
     name: api-gateway
   datasource:
@@ -22,7 +24,7 @@ spring:
       flush-mode: on_save
       repository-type: default
   flyway:
-    enabled: false
+    enabled: true
     locations: classpath:db/migration
 
 server:
