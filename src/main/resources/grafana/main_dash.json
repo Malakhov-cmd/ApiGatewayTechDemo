@@ -1,0 +1,125 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1650000000000,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Application Health",
+      "targets": [
+        {
+          "expr": "application_health_status",
+          "legendFormat": "{{component}}"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "1": { "text": "UP", "color": "green" }, "0": { "text": "DOWN", "color": "red" } } }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "green", "value": 1 } ] }
+        }
+      },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 0 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Controller RPS",
+      "targets": [
+        {
+          "expr": "sum by (method) (rate(controller_calls_total[1m]))",
+          "legendFormat": "{{method}}"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Controller Errors",
+      "targets": [
+        {
+          "expr": "sum by (method) (rate(controller_calls_errors_total[1m]))",
+          "legendFormat": "{{method}}"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 }
+    },
+    {
+      "type": "gauge",
+      "title": "HikariCP Active Connections",
+      "targets": [
+        {
+          "expr": "hikaricp_connections_active"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 20,
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null }, { "color": "red", "value": 15 } ] }
+        }
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 12 }
+    },
+    {
+      "type": "gauge",
+      "title": "HikariCP Idle Connections",
+      "targets": [
+        {
+          "expr": "hikaricp_connections_idle"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 20,
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "green", "value": 5 } ] }
+        }
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 12 }
+    },
+    {
+      "type": "timeseries",
+      "title": "JVM Heap Used",
+      "targets": [
+        {
+          "expr": "jvm_memory_used_bytes{area=\"heap\"}",
+          "legendFormat": "Heap"
+        }
+      ],
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 12 }
+    },
+    {
+      "type": "timeseries",
+      "title": "JVM Threads",
+      "targets": [
+        {
+          "expr": "jvm_threads_live_threads",
+          "legendFormat": "Live Threads"
+        }
+      ],
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 18 }
+    }
+  ],
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": ["spring", "prometheus", "micrometer"],
+  "templating": { "list": [] },
+  "time": { "from": "now-15m", "to": "now" },
+  "timezone": "",
+  "title": "Spring Boot Monitoring",
+  "uid": "spring-dashboard",
+  "version": 1
+}

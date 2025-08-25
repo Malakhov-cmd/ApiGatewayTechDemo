@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.tech.demo.aop.BaseMetrics;
 
 import java.util.Map;
 
@@ -12,8 +13,10 @@ import java.util.Map;
 @RequestMapping("/usr")
 @Tag(name = "User controller", description = "Контроллер получения информации по пользователю")
 public class UserController {
+
     @GetMapping("/profile")
-    public Map<String, Object> me(Authentication auth) {
+    @BaseMetrics
+    public Map<String, Object> getProfileData(Authentication auth) {
         return Map.of(
                 "name", auth.getName(),
                 "authorities", auth.getAuthorities()

@@ -1,0 +1,38 @@
+# Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"                # открываем все эндпоинты Actuator
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always           # подробности health
+      probes:
+        enabled: true
+    info:
+      enabled: true                  # включаем info
+    prometheus:
+      enabled: true                  # эндпоинт /actuator/prometheus
+  metrics:
+    enable:
+      all: true                      # включаем все метрики
+    distribution:
+      percentiles-histogram:
+        http_server_requests: true   # гистограммы для http запросов
+    tags:
+      application: ApiGateway        # глобальный тег для всех метрик
+  health:
+    diskspace:
+      enabled: true
+      path: /
+      threshold: 10MB
+
+# Кастомная информация для /actuator/info
+info:
+  app:
+    name: ApiGateway
+    description: ApiGateway with JSON auth and redis stored session
+    version: 1.0.0
+    authors:
+      - George Malcolm
