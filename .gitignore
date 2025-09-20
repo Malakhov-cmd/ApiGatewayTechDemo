@@ -39,4 +39,5 @@ bin/
 .DS_Store
 
 logs/
-/src/main/resources/keystore.p12
+/src/main/resources/secrets.properties
+/src/main/resources/ssl/

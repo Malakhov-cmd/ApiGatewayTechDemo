@@ -48,7 +48,8 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/api/auth/login",
                                 "/swagger-ui/**",
-                                "v3/api-docs/**"
+                                "v3/api-docs/**",
+                                "/.well-known/jwks.json" // передаем публичный ключ - ничего страшного
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

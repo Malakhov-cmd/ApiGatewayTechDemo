@@ -1,0 +1,9 @@
+userService:
+  url: ${user.service.url}
+  ssl:
+    cert: ${user.service.ssl.cert}
+    key: ${user.service.ssl.key}
+    trustStore: ${user.service.ssl.trust.store}
+  jwks:
+    key-id: ${user.service.jwks.key-id}
+    issuer: "front-api"

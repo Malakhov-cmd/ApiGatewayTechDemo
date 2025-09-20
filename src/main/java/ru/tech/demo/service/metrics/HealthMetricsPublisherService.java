@@ -1,4 +1,4 @@
-package ru.tech.demo.service;
+package ru.tech.demo.service.metrics;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;

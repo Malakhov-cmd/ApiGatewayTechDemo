@@ -3,6 +3,7 @@ spring:
     import:
       - "classpath:secrets.properties"
       - "classpath:grafana/metrics-props.yml"
+      - "classpath:/microservices/user-service-props.yml"
   application:
     name: api-gateway
   datasource:
@@ -36,7 +37,13 @@ server:
     key-password: ${ssl.key-password}
     key-store-type: PKCS12
     key-alias: ${ssl.key-alias}
+    trust-store: ${ssl.trust-store}
+    trust-store-password: ${ssl.trust-store-password}
+    trust-store-type: PKCS12
     enabled-protocols: TLSv1.2,TLSv1.3
+    custom:
+      jwt-private-key: ${ssl.custom.jwt-private-key-path}
+      jwt-public-key: ${ssl.custom.jwt-public-key-path}
   undertow:
     buffer-size: 1024
     direct-buffers: true
